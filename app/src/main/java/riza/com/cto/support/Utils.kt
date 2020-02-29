@@ -3,6 +3,8 @@ package riza.com.cto.support
 import android.content.Context
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import riza.com.cto.BuildConfig
 
 /**
@@ -15,3 +17,8 @@ fun debugLog(message: Any?) {
 }
 
 fun Context.getCompatColor(resource: Int) = ContextCompat.getColor(this, resource)
+
+fun <T> gsontoList(string: String): List<T> {
+    val listType = object : TypeToken<List<T>>() {}.type
+    return Gson().fromJson<List<T>>(string, listType)
+}
