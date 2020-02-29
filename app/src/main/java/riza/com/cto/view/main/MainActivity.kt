@@ -1,7 +1,8 @@
-package riza.com.cto
+package riza.com.cto.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import riza.com.cto.R
 
 class MainActivity : AppCompatActivity() {
 
