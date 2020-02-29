@@ -1,51 +1,46 @@
-package riza.com.cto.data.local
+package riza.com.cto.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import riza.com.cto.BuildConfig
 
 /**
  * Created by riza@deliv.co.id on 9/30/19.
  */
-/*
+
 
 @Database(
     entities = [
-        Product::class,
-        Category::class,
-        ProductCategoryCrossRef::class,
-        Cart::class,
-        POSTransaction::class,
-        StockChange::class
+        Area::class
     ],
-    version = 2
+    version = 1
 )
-@TypeConverters(Converters::class)
-abstract class POSDB : RoomDatabase() {
-    abstract fun posDao(): POSDAO
+
+abstract class AppDB : RoomDatabase() {
+    abstract fun mainDao(): MainDao
 
     companion object {
         @Volatile
-        private var INSTANCE: POSDB? = null
+        private var INSTANCE: AppDB? = null
 
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): POSDB {
+        ): AppDB {
 
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    POSDB::class.java,
-                    "pos_database"
+                    AppDB::class.java,
+                    "cto_database"
                 )
-                    .addCallback(POSDatabaseCallback(scope))
+                    .addCallback(MyDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
 
@@ -53,7 +48,7 @@ abstract class POSDB : RoomDatabase() {
             }
         }
 
-        private class POSDatabaseCallback(
+        private class MyDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
 
@@ -63,7 +58,7 @@ abstract class POSDB : RoomDatabase() {
 
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.posDao())
+                        populateDatabase(database.mainDao())
                     }
                 }
             }
@@ -73,23 +68,18 @@ abstract class POSDB : RoomDatabase() {
 
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        if (BuildConfig.DEBUG) debugScript(database.posDao())
+                        if (BuildConfig.DEBUG) debugScript(database.mainDao())
                     }
                 }
             }
         }
 
-        suspend fun populateDatabase(posDao: POSDAO) {
+        suspend fun populateDatabase(posDao: MainDao) {
 
         }
 
-        suspend fun debugScript(posDao: POSDAO) {
-
-            posDao.clearCart()
-
+        suspend fun debugScript(mainDao: MainDao) {
         }
     }
 
 }
-
- */

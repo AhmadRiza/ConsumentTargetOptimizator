@@ -10,6 +10,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_maps.*
+import org.jetbrains.anko.toast
 import riza.com.cto.R
 import riza.com.cto.support.debugLog
 import riza.com.cto.support.getCompatColor
@@ -37,6 +38,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initView() {
         btn_clear?.setOnClickListener { vm.clear() }
         btn_undo?.setOnClickListener { vm.undo() }
+        btn_save?.setOnClickListener {
+
+            val name = et_name?.text.toString()
+            if(name.isBlank()) toast("Type the name")
+            else vm.saveArea(name)
+
+        }
     }
 
     private fun initObserver() {

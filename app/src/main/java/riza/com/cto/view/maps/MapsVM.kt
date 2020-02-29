@@ -3,8 +3,12 @@ package riza.com.cto.view.maps
 import android.app.Application
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import riza.com.cto.core.Point
+import riza.com.cto.data.db.AppDB
+import riza.com.cto.data.db.Area
+import riza.com.cto.support.debugLog
 
 /**
  * Created by riza@deliv.co.id on 1/21/20.
@@ -13,6 +17,15 @@ import riza.com.cto.core.Point
 class MapsVM(application: Application) : AndroidViewModel(application) {
 
     val polygonData = MutableLiveData<ArrayList<LatLng>>()
+    val polygonDbId = MutableLiveData<Long>()
+
+    private val repository: MapsRepository
+
+
+    init {
+        val db = AppDB.getDatabase(application, viewModelScope)
+        repository = MapsRepository(db.mainDao())
+    }
 
     val polygonOutput: LiveData<ArrayList<Point>> = Transformations.map(polygonData) {
 
@@ -53,6 +66,17 @@ class MapsVM(application: Application) : AndroidViewModel(application) {
 
         polygonData.postValue(point)
 
+    }
+
+
+    fun saveArea(name: String) = viewModelScope.launch {
+        val gson = Gson()
+        val points = gson.toJson(polygonOutput.value)
+        val area = Area(0L, name, points)
+
+        debugLog(area)
+
+        polygonDbId.postValue(repository.saveArea(area))
     }
 
 
