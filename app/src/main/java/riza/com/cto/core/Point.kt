@@ -1,6 +1,8 @@
 package riza.com.cto.core
 
+import com.google.gson.annotations.SerializedName
+
 data class Point(
-    val x: Double,
-    val y: Double
+    @SerializedName("lon") val x: Double,
+    @SerializedName("lat") val y: Double
 )

@@ -73,7 +73,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun addMarkerOn(p: LatLng) {
 
         val marker = mMap.addMarker(
-            MarkerOptions().position(p).icon(BitmapDescriptorFactory.fromResource(R.drawable.dot)).title(p.toString())
+            MarkerOptions().position(p).icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)).title(p.toString())
         )
         mMarkers.add(marker)
 
@@ -83,9 +83,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val uin = LatLng(-7.9503817,112.6063938)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(uin, 16f))
 
         mMap.setOnMapClickListener {
             if(isDrawing) addPolygonPoint(it)
