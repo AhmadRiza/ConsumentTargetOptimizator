@@ -1,11 +1,10 @@
-package riza.com.cto.ui.maps
+package riza.com.cto.view.maps
 
 import android.app.Application
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 import riza.com.cto.core.Point
-import riza.com.cto.support.debugLog
 
 /**
  * Created by riza@deliv.co.id on 1/21/20.

@@ -1,4 +1,4 @@
-package riza.com.cto.ui.main
+package riza.com.cto.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

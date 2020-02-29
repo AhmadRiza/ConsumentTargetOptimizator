@@ -1,4 +1,4 @@
-package riza.com.cto.ui.maps
+package riza.com.cto.view.maps
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
