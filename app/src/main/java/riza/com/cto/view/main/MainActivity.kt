@@ -10,6 +10,7 @@ import org.jetbrains.anko.intentFor
 import riza.com.cto.R
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.Adapter2
+import riza.com.cto.view.check.CheckActivity
 import riza.com.cto.view.maps.MapsActivity
 import riza.com.cto.view.maps.MapsVM
 
@@ -48,6 +49,12 @@ class MainActivity : AppCompatActivity() {
                 holder.bind(
                     data = data,
                     onClick = {
+
+                        startActivity(
+                            intentFor<CheckActivity>(
+                                "area" to it
+                            )
+                        )
 
                     },
                     onDelete = {
