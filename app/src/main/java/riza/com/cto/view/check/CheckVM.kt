@@ -11,9 +11,11 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import riza.com.cto.core.Polygon
 import riza.com.cto.core.Point
+import riza.com.cto.core.PointInclusion
 import riza.com.cto.core.PolygonUtils
 import riza.com.cto.data.db.AppDB
 import riza.com.cto.data.db.Area
+import riza.com.cto.support.debugLog
 import java.lang.Math.random
 import kotlin.math.PI
 import kotlin.math.cos
@@ -28,18 +30,21 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
     val polygonData = MutableLiveData<ArrayList<LatLng>>()
     val centroid = MutableLiveData<LatLng>()
+    val nUser = MutableLiveData<Int>()
+    val radius = MutableLiveData<Int>()
+    val milis = MutableLiveData<Long>()
+    val listTest = MutableLiveData<ArrayList<Pair<LatLng, Boolean>>>()
 
-    val testPoints = MutableLiveData<ArrayList<Pair<LatLng, Boolean>>>()
-
-    val displayRadius = MutableLiveData<Double>()
 
     private var mPolygon: Polygon? = null
-
+    private var isUsingWN = true
     private val repository: CheckRepository
+    private val geofencing: PointInclusion
 
     init {
         val db = AppDB.getDatabase(application, viewModelScope)
         repository = CheckRepository(db.mainDao())
+        geofencing = PointInclusion()
     }
 
     fun setPolygonData(area: Area) = viewModelScope.launch {
@@ -61,22 +66,42 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
         polygonData.postValue(data)
 
-
         val center = PolygonUtils.calculateCentroid(points)
         centroid.postValue(LatLng(center.y, center.x))
 
-        displayRadius.postValue(
-            PolygonUtils.degreeToMeter(PolygonUtils.getOuterRadius(100.0, mPolygon!!))
-        )
+        radius.postValue(100)
+        nUser.postValue(100)
 
     }
 
-    val listTest = Transformations.map(centroid){
+    fun setNUser(n: Int) {
+        nUser.value = n
+    }
 
-        val result = arrayListOf<LatLng>()
-        val radius = PolygonUtils.getOuterRadius(100.0, mPolygon!!)
+    fun setRadius(r: Int) {
+        radius.value = r
+    }
 
-        for(i in 0..5){
+    fun setisUsingWN(isUsingWN: Boolean) {
+        this.isUsingWN = isUsingWN
+    }
+
+    val displayRadius = Transformations.map(radius) {
+        PolygonUtils.degreeToMeter(PolygonUtils.getOuterRadius(it.toDouble(), mPolygon!!))
+    }
+
+    fun singleTest() = viewModelScope.launch {
+
+        val it = centroid.value!!
+
+        val result = arrayListOf<Pair<LatLng, Boolean>>()
+        val radius = PolygonUtils.getOuterRadius((radius.value ?: 0).toDouble(), mPolygon!!)
+
+        var time = 0L
+
+        for (i in 0..(nUser.value ?: 0)) {
+
+            //random point in circle
 
             val a = random() * 2 * PI
             val r = radius * sqrt(random())
@@ -84,20 +109,32 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
             val x = r * cos(a)
             val y = r * sin(a)
 
+
+            val now = System.currentTimeMillis()
+            val isInside = if (isUsingWN) {
+                geofencing.analyzePointByWN(mPolygon!!, Point(it.longitude + x, it.latitude + y))
+            } else {
+                geofencing.analyzePointByCN(mPolygon!!, Point(it.longitude + x, it.latitude + y))
+            }
+            val end = System.currentTimeMillis()
+
+            time += (end - now)
+
             result.add(
-                LatLng(it.latitude+y, it.longitude+x)
+                Pair(LatLng(it.latitude + y, it.longitude + x), isInside)
             )
 
         }
 
+        debugLog("time = $time")
 
+        milis.postValue(
+            time
+        )
 
-        result
-
+        listTest.postValue(result)
 
     }
-
-
 
 
 }

@@ -2,6 +2,7 @@ package riza.com.cto.view.check
 
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,17 +12,20 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_check.*
+import org.jetbrains.anko.toast
 import riza.com.cto.R
 import riza.com.cto.core.PolygonUtils
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.debugLog
 import riza.com.cto.support.getCompatColor
+import riza.com.cto.support.visible
 
-class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
+class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBarChangeListener {
 
     private lateinit var mMap: GoogleMap
 
     private var mPolygon : Polygon? = null
+    private var mCircle : Circle? = null
     private var mMarkers = arrayListOf<Marker>()
 
     private val vm by lazy { ViewModelProvider(this).get(CheckVM::class.java) }
@@ -44,6 +48,25 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
         btn_back?.setOnClickListener { onBackPressed() }
 
+        seek_radius?.setOnSeekBarChangeListener(this)
+        seek_user?.setOnSeekBarChangeListener(this)
+
+        btn_single?.setOnClickListener {
+            if(vm.nUser.value?:0>0 && vm.radius.value?:0>0){
+                vm.singleTest()
+            }else{
+                toast("Radius & User couldn't be 0")
+            }
+        }
+
+        rg_algorithm?.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.rad_wn -> vm.setisUsingWN(true)
+                R.id.rad_cn -> vm.setisUsingWN(false)
+            }
+
+        }
+
     }
 
     private fun initObserver() {
@@ -61,17 +84,37 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
         vm.centroid.observe(this, Observer {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 18f))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 16f))
 
         })
 
         vm.displayRadius.observe(this, Observer {
+            mCircle?.remove()
             createCircle(vm.centroid.value!!, it)
         })
 
         vm.listTest.observe(this, Observer {
-            it.forEach { addMarkerOn(it) }
+            mMarkers.forEach { it.remove() }
+            it.forEach { addMarkerOn(it.first, it.second) }
         })
+
+        vm.radius.observe(this, Observer {
+            seek_radius?.progress = it
+            tv_radius?.text = "$it Meters"
+        })
+
+        vm.nUser.observe(this, Observer {
+            seek_user?.progress = it
+            tv_n_user?.text = "$it Users"
+        })
+
+        vm.milis.observe(this, Observer {
+
+            tv_milis?.visible()
+            tv_milis?.text = "$it ms"
+
+        })
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -95,25 +138,12 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
         debugLog(mPolygon)
     }
 
-    private fun createBounding(data: List<LatLng>) {
+    private fun addMarkerOn(p: LatLng, boolean: Boolean) {
 
-        mPolygon = mMap.addPolygon(
-
-            PolygonOptions()
-                .fillColor(Color.TRANSPARENT)
-                .strokeWidth(1f)
-                .addAll(data)
-                .strokeJointType(JointType.BEVEL)
-
-        )
-
-        debugLog(mPolygon)
-    }
-
-    private fun addMarkerOn(p: LatLng) {
+        val icon = if(boolean) R.drawable.pointer_green else R.drawable.pointer_red
 
         val marker = mMap.addMarker(
-            MarkerOptions().position(p).icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)).title(p.toString())
+            MarkerOptions().position(p).icon(BitmapDescriptorFactory.fromResource(icon)).title(p.toString())
         )
         mMarkers.add(marker)
 
@@ -121,7 +151,7 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun createCircle(center: LatLng, radius: Double){
 
-        mMap.addCircle(CircleOptions()
+        mCircle = mMap.addCircle( CircleOptions()
             .center(center)
             .radius(radius)
             .fillColor(Color.TRANSPARENT)
@@ -129,6 +159,20 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
     }
+
+    override fun onProgressChanged(p0: SeekBar?, progress: Int, fromUser: Boolean) {
+        if(fromUser){
+            when(p0?.id){
+                R.id.seek_radius-> vm.setRadius(progress)
+                R.id.seek_user-> vm.setNUser(progress)
+            }
+        }
+
+    }
+
+    override fun onStartTrackingTouch(p0: SeekBar?) = Unit
+
+    override fun onStopTrackingTouch(p0: SeekBar?) = Unit
 
 
 }

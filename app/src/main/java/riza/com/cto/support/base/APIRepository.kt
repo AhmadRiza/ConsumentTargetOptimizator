@@ -17,7 +17,7 @@ abstract class APIRepository {
     )
 
 
-    protected fun <T>callAPI(apiCall:()->Call<T>): APIResponse<T> {
+    protected fun <T> callAPI(apiCall: () -> Call<T>): APIResponse<T> {
 
         val result = APIResponse<T>()
 
@@ -37,7 +37,7 @@ abstract class APIRepository {
                 }
             }
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             result.success = false
             result.message = "Internal Server Error"
         }

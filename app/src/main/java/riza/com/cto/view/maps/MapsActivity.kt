@@ -74,6 +74,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         vm.polygonOutput.observe(this, Observer {
             debugLog(it)
         })
+
+        vm.polygonDbId.observe(this, Observer {
+            onBackPressed()
+        })
     }
 
     private fun clearMarker() {
