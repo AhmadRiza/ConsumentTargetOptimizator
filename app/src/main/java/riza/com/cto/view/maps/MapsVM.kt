@@ -31,7 +31,7 @@ class MapsVM(application: Application) : AndroidViewModel(application) {
 
         val list = arrayListOf<Point>()
         it.forEach { p ->
-            list.add(Point(p.longitude.toFloat(), p.latitude.toFloat()))
+            list.add(Point(p.longitude, p.latitude))
         }
 
         list

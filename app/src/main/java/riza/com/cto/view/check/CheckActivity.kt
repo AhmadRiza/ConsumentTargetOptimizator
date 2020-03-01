@@ -90,7 +90,7 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBar
 
         vm.displayRadius.observe(this, Observer {
             mCircle?.remove()
-            createCircle(vm.centroid.value!!, it.toDouble())
+            createCircle(vm.centroid.value!!, it)
         })
 
         vm.listTest.observe(this, Observer {
