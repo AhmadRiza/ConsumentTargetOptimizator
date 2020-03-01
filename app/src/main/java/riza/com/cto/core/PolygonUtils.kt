@@ -12,8 +12,8 @@ object PolygonUtils {
 
     fun calculateCentroid(data: List<Point>): Point {
 
-        var latSum: Double = 0.0
-        var lonSum: Double = 0.0
+        var latSum: Float = 0f
+        var lonSum: Float = 0f
 
         data.forEach {
             latSum += it.y
@@ -50,9 +50,9 @@ object PolygonUtils {
 
     fun meterToDegree(meter: Double) = meter/ 111111
 
-    fun degreeToMeter(degree: Double) = degree * 111111
+    fun degreeToMeter(degree: Float) = degree * 111111
 
-    fun getOuterRadius(meter: Double, polygon: Polygon): Double{
+    fun getOuterRadius(meter: Double, polygon: Polygon): Float{
 
         val bounding = BoundingBox(polygon)
         val center = calculateCentroid(polygon.points)
@@ -67,7 +67,7 @@ object PolygonUtils {
         val outer = outerPoints.max()
 
 
-        return (outer?:0.0) + meterToDegree(meter)
+        return ((outer?:0f) + meterToDegree(meter).toFloat())
 
     }
 

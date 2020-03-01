@@ -59,7 +59,7 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
         points.forEach {
 
             data.add(
-                LatLng(it.y, it.x)
+                LatLng(it.y.toDouble(), it.x.toDouble())
             )
 
         }
@@ -67,7 +67,7 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
         polygonData.postValue(data)
 
         val center = PolygonUtils.calculateCentroid(points)
-        centroid.postValue(LatLng(center.y, center.x))
+        centroid.postValue(LatLng(center.y.toDouble(), center.x.toDouble()))
 
         radius.postValue(100)
         nUser.postValue(100)
@@ -112,9 +112,9 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
             val now = System.currentTimeMillis()
             val isInside = if (isUsingWN) {
-                geofencing.analyzePointByWN(mPolygon!!, Point(it.longitude + x, it.latitude + y))
+                geofencing.analyzePointByWN(mPolygon!!, Point((it.longitude + x).toFloat(), (it.latitude + y).toFloat()))
             } else {
-                geofencing.analyzePointByCN(mPolygon!!, Point(it.longitude + x, it.latitude + y))
+                geofencing.analyzePointByCN(mPolygon!!, Point((it.longitude + x).toFloat(), (it.latitude + y).toFloat()))
             }
             val end = System.currentTimeMillis()
 
