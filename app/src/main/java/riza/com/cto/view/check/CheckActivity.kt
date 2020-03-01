@@ -1,5 +1,6 @@
 package riza.com.cto.view.check
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_check.*
 import riza.com.cto.R
+import riza.com.cto.core.PolygonUtils
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.debugLog
 import riza.com.cto.support.getCompatColor
@@ -20,6 +22,7 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
 
     private var mPolygon : Polygon? = null
+    private var mMarkers = arrayListOf<Marker>()
 
     private val vm by lazy { ViewModelProvider(this).get(CheckVM::class.java) }
 
@@ -59,8 +62,16 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
         vm.centroid.observe(this, Observer {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 18f))
+
         })
 
+        vm.displayRadius.observe(this, Observer {
+            createCircle(vm.centroid.value!!, it)
+        })
+
+        vm.listTest.observe(this, Observer {
+            it.forEach { addMarkerOn(it) }
+        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -81,10 +92,42 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
                 .strokeJointType(JointType.BEVEL)
 
         )
+        debugLog(mPolygon)
+    }
 
-        mPolygon?.tag = "drawing"
+    private fun createBounding(data: List<LatLng>) {
+
+        mPolygon = mMap.addPolygon(
+
+            PolygonOptions()
+                .fillColor(Color.TRANSPARENT)
+                .strokeWidth(1f)
+                .addAll(data)
+                .strokeJointType(JointType.BEVEL)
+
+        )
 
         debugLog(mPolygon)
+    }
+
+    private fun addMarkerOn(p: LatLng) {
+
+        val marker = mMap.addMarker(
+            MarkerOptions().position(p).icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)).title(p.toString())
+        )
+        mMarkers.add(marker)
+
+    }
+
+    private fun createCircle(center: LatLng, radius: Double){
+
+        mMap.addCircle(CircleOptions()
+            .center(center)
+            .radius(radius)
+            .fillColor(Color.TRANSPARENT)
+            .strokeWidth(1f)
+        )
+
     }
 
 
