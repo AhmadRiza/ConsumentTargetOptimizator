@@ -1,11 +1,13 @@
 package riza.com.cto.view.main
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
 import riza.com.cto.R
 import riza.com.cto.data.db.Area
@@ -58,6 +60,19 @@ class MainActivity : AppCompatActivity() {
 
                     },
                     onDelete = {
+
+                        alert {
+                            message = "Hapus ${it.name}?"
+                            positiveButton("Ya"){ d: DialogInterface ->
+                                vm.deleteArea(it)
+                                d.dismiss()
+                            }
+
+                            negativeButton("Batal"){ d: DialogInterface ->
+                                d.dismiss()
+                            }
+
+                        }.show()
 
                     }
                 )

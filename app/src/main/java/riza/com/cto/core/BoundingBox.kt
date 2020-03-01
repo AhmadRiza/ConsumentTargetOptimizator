@@ -2,10 +2,10 @@ package riza.com.cto.core
 
 class BoundingBox(val p: Polygon) {
 
-    private var xMin : Double
-    private var xMax : Double
-    private var yMax : Double
-    private var yMin : Double
+    var xMin : Float
+    var xMax : Float
+    var yMax : Float
+    var yMin : Float
 
     init {
         xMin = p.points[0].x
