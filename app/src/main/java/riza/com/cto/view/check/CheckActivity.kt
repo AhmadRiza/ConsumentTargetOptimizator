@@ -18,9 +18,7 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-    private var isDrawing = true
     private var mPolygon : Polygon? = null
-    private var mMarkers = arrayListOf<Marker>()
 
     private val vm by lazy { ViewModelProvider(this).get(CheckVM::class.java) }
 
@@ -46,12 +44,6 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
         vm.polygonData.observe(this, Observer {
             debugLog(it)
 
-            clearMarker()
-
-            it.forEach {
-                addMarkerOn(it)
-            }
-
             if(it.size >= 3){
                 if(mPolygon == null) createPolygon(it)
                 else mPolygon?.points = it
@@ -68,27 +60,11 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    private fun clearMarker() {
-        mMarkers.forEach {
-            it.remove()
-        }
-    }
-
-    private fun addMarkerOn(p: LatLng) {
-
-        val marker = mMap.addMarker(
-            MarkerOptions().position(p).icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)).title(p.toString())
-        )
-        mMarkers.add(marker)
-
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         initView()
         initObserver()
         receiveExtra()
-
     }
 
     private fun createPolygon(data: List<LatLng>) {
