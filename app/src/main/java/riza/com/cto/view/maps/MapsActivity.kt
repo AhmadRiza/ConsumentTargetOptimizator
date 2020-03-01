@@ -10,6 +10,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_maps.*
+import kotlinx.android.synthetic.main.activity_maps.btn_back
+import kotlinx.android.synthetic.main.activity_maps.btn_clear
+import kotlinx.android.synthetic.main.activity_maps.btn_save
 import org.jetbrains.anko.toast
 import riza.com.cto.R
 import riza.com.cto.support.debugLog
@@ -36,6 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun initView() {
+        btn_back?.setOnClickListener { onBackPressed() }
         btn_clear?.setOnClickListener { vm.clear() }
         btn_undo?.setOnClickListener { vm.undo() }
         btn_save?.setOnClickListener {
@@ -92,7 +96,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         val uin = LatLng(-7.9503817,112.6063938)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(uin, 16f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(uin, 18f))
 
         mMap.setOnMapClickListener {
             if(isDrawing) addPolygonPoint(it)

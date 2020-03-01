@@ -9,6 +9,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.activity_check.*
 import riza.com.cto.R
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.debugLog
@@ -38,6 +39,8 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun initView() {
 
+        btn_back?.setOnClickListener { onBackPressed() }
+
     }
 
     private fun initObserver() {
@@ -55,7 +58,7 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
         vm.centroid.observe(this, Observer {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 16f))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 18f))
         })
 
     }
