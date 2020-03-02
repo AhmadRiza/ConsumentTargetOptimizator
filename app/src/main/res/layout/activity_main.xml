@@ -27,6 +27,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_area"
+        android:paddingBottom="@dimen/_60sdp"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
