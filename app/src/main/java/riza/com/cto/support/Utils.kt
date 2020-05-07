@@ -35,3 +35,8 @@ fun View.gone(){
 fun View.invisible(){
     visibility = View.INVISIBLE
 }
+
+fun Exception.printDebugLog(){
+    debugLog(message)
+    if(BuildConfig.DEBUG) printStackTrace()
+}
