@@ -85,7 +85,7 @@
             android:layout_marginBottom="@dimen/_12sdp"
             android:gravity="center"
             android:maxWidth="@dimen/_50sdp"
-            android:text="Area Terdaftar"
+            android:text="Area\nAktif"
             android:textColor="@color/textGrey"
             android:textSize="@dimen/_9ssp"
             app:layout_constraintEnd_toEndOf="@id/tv_total_area"

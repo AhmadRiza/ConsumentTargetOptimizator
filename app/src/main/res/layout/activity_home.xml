@@ -50,6 +50,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:id="@+id/fab_test"
+                android:layout_height="wrap_content"
+                app:fabSize="mini"
+                app:elevation="0dp"
+                android:src="@drawable/ic_settings"
+                android:tint="@color/white"
+                android:backgroundTint="@color/orange"
+                android:layout_margin="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
