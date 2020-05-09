@@ -41,7 +41,7 @@
             />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/label1"
+            android:id="@+id/tv_until"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="10 Hari lagi"

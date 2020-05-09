@@ -1,8 +1,8 @@
-package riza.com.cto.view.main
+package riza.com.cto.view.testarea
 
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,13 +14,13 @@ import riza.com.cto.data.db.Area
 import riza.com.cto.support.Adapter2
 import riza.com.cto.view.check.CheckActivity
 import riza.com.cto.view.maps.MapsActivity
-import riza.com.cto.view.maps.MapsVM
+import riza.com.cto.view.selectarea.SelectAreaVM
 
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var areaAdapter: Adapter2<Area, AreaVH>
-    private val vm by lazy { ViewModelProvider(this).get(MainVM::class.java) }
+    private val vm by lazy { ViewModelProvider(this).get(SelectAreaVM::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +63,12 @@ class MainActivity : AppCompatActivity() {
 
                         alert {
                             message = "Hapus ${it.name}?"
-                            positiveButton("Ya"){ d: DialogInterface ->
+                            positiveButton("Ya") { d: DialogInterface ->
                                 vm.deleteArea(it)
                                 d.dismiss()
                             }
 
-                            negativeButton("Batal"){ d: DialogInterface ->
+                            negativeButton("Batal") { d: DialogInterface ->
                                 d.dismiss()
                             }
 
@@ -93,8 +93,6 @@ class MainActivity : AppCompatActivity() {
                 intentFor<MapsActivity>()
             )
         }
-
-
 
 
     }

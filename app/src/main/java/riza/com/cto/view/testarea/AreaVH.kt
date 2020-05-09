@@ -1,4 +1,4 @@
-package riza.com.cto.view.main
+package riza.com.cto.view.testarea
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

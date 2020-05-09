@@ -24,19 +24,42 @@ fun <T> gsontoList(string: String): List<T> {
     return Gson().fromJson<List<T>>(string, listType)
 }
 
-fun View.visible(){
+fun View.visible() {
     visibility = View.VISIBLE
 }
 
-fun View.gone(){
+fun View.gone() {
     visibility = View.GONE
 }
 
-fun View.invisible(){
+fun View.invisible() {
     visibility = View.INVISIBLE
 }
 
-fun Exception.printDebugLog(){
+fun Exception.printDebugLog() {
     debugLog(message)
-    if(BuildConfig.DEBUG) printStackTrace()
+    if (BuildConfig.DEBUG) printStackTrace()
+}
+
+fun getTimeDif(time1: Long, time2: Long): String {
+
+    var difference = time2 - time1
+
+    val secondsInMilli = 1000
+    val minutesInMilli = secondsInMilli * 60
+    val hoursInMilli = minutesInMilli * 60
+    val daysInMilli = hoursInMilli * 24
+
+    val elapsedDays: Long = difference / daysInMilli
+    difference %= daysInMilli
+
+    val elapsedHours: Long = difference / hoursInMilli
+    difference %= hoursInMilli
+
+    if (elapsedDays > 0) {
+        return "$elapsedDays Hari"
+    } else {
+        return "$elapsedHours Jam"
+    }
+
 }

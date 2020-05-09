@@ -33,7 +33,7 @@
             android:name=".view.maps.MapsActivity">
 
         </activity>
-        <activity android:name=".view.main.MainActivity">
+        <activity android:name=".view.selectarea.SelectAreaActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
