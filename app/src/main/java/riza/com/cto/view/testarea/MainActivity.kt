@@ -14,13 +14,12 @@ import riza.com.cto.data.db.Area
 import riza.com.cto.support.Adapter2
 import riza.com.cto.view.check.CheckActivity
 import riza.com.cto.view.maps.MapsActivity
-import riza.com.cto.view.selectarea.SelectAreaVM
 
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var areaAdapter: Adapter2<Area, AreaVH>
-    private val vm by lazy { ViewModelProvider(this).get(SelectAreaVM::class.java) }
+    private val vm by lazy { ViewModelProvider(this).get(MainVM::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
