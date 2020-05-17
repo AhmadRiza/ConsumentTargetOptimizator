@@ -41,6 +41,20 @@
                 android:layout_margin="@dimen/_12sdp"
                 />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_delete"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                app:srcCompat="@drawable/ic_delete"
+                android:padding="@dimen/_6sdp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginEnd="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -48,8 +62,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_12sdp"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_100sdp"
         android:clipToPadding="false"
+        android:clipChildren="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 
@@ -199,14 +217,51 @@
             app:layout_constraintTop_toBottomOf="@id/label2"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="3"
+            tools:itemCount="1"
+            android:paddingBottom="@dimen/_16sdp"
             android:clipToPadding="false"
             android:clipChildren="false"
             tools:listitem="@layout/item_area"/>
 
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Tambah Area"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_12sdp"
+            android:backgroundTint="@color/grey_bright"
+            android:fontFamily="@font/bold"
+            android:textAllCaps="false"
+            app:drawableTint="@color/textBlack"
+            android:drawablePadding="@dimen/_8sdp"
+            android:drawableStart="@drawable/ic_add"
+            app:layout_constraintTop_toBottomOf="@id/rv_area" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <FrameLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_16sdp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/MButtonPrimary"
+            android:text="Tambah Promo" />
+
+    </FrameLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,9 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
-import riza.com.cto.core.Point
 import riza.com.cto.data.api.APIServiceFactory
 import riza.com.cto.data.api.MainAPI
 import riza.com.cto.data.db.Area
@@ -33,13 +31,11 @@ class SelectAreaVM(application: Application) : AndroidViewModel(application) {
 
     val areas = Transformations.map(areasFromAPI) {
 
-        val listType = object : TypeToken<List<Point>>() {}.type
-
         it.map {
             Area(
                 it.id,
                 it.name,
-                gson.fromJson(it.points, listType)
+                it.points
             )
         }
 

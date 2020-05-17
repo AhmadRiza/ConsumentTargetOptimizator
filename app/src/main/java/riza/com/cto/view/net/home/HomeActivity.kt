@@ -19,6 +19,9 @@ import riza.com.cto.view.local.testarea.MainActivity
 
 class HomeActivity : AppCompatActivity() {
 
+    companion object {
+        const val REQ_ADD_AREA = 1
+    }
 
     private val vm by lazy { ViewModelProvider(this).get(HomeVM::class.java) }
     private lateinit var promoAdapter: Adapter2<Promo, PromoVH>
@@ -82,11 +85,18 @@ class HomeActivity : AppCompatActivity() {
             )
         }
 
+        fab_add?.setOnClickListener {
+            startActivityForResult(
+                intentFor<AddPromoActivity>(), REQ_ADD_AREA
+            )
+        }
+
         swipe?.setOnRefreshListener {
             vm.getAllPromo()
         }
 
 
     }
+
 
 }

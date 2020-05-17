@@ -9,6 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import riza.com.cto.model.AreaPromo
 import riza.com.cto.model.Promo
+import riza.com.cto.model.PromoRequest
 import riza.com.cto.model.TestModel
 import riza.com.cto.support.base.BaseResponse
 
@@ -28,6 +29,9 @@ interface MainAPI {
 
     @GET("promo/all")
     fun getAllPromoAsync(): Deferred<Response<BaseResponse<List<Promo>>>>
+
+    @POST("promo/add")
+    fun addPromoAsync(@Body body: PromoRequest): Deferred<Response<BaseResponse<Any>>>
 
     @GET("area/all")
     fun getAllAreaAsync(): Deferred<Response<BaseResponse<List<AreaPromo>>>>

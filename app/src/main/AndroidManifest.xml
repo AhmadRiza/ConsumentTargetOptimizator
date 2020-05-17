@@ -45,6 +45,7 @@
             </intent-filter>
         </activity>
         <activity android:name="riza.com.cto.view.net.selectarea.SelectAreaActivity" />
+        <activity android:name=".view.net.home.AddPromoActivity" />
     </application>
 
 </manifest>
