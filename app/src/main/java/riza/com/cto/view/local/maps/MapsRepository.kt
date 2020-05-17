@@ -1,4 +1,4 @@
-package riza.com.cto.view.maps
+package riza.com.cto.view.local.maps
 
 import riza.com.cto.data.db.Area
 import riza.com.cto.data.db.MainDao

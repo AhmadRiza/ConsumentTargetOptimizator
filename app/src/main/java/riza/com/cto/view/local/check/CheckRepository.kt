@@ -1,4 +1,4 @@
-package riza.com.cto.view.check
+package riza.com.cto.view.local.check
 
 import riza.com.cto.data.db.Area
 import riza.com.cto.data.db.MainDao

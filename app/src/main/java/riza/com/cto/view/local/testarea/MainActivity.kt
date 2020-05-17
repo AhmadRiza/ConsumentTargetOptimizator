@@ -1,4 +1,4 @@
-package riza.com.cto.view.testarea
+package riza.com.cto.view.local.testarea
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -12,8 +12,8 @@ import org.jetbrains.anko.intentFor
 import riza.com.cto.R
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.Adapter2
-import riza.com.cto.view.check.CheckActivity
-import riza.com.cto.view.maps.MapsActivity
+import riza.com.cto.view.local.check.CheckActivity
+import riza.com.cto.view.local.maps.MapsActivity
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package riza.com.cto.view.selectarea
+package riza.com.cto.view.net.selectarea
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

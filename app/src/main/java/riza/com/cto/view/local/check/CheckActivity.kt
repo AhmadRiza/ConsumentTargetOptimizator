@@ -1,4 +1,4 @@
-package riza.com.cto.view.check
+package riza.com.cto.view.local.check
 
 import android.graphics.Color
 import android.os.Bundle
@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_check.*
 import org.jetbrains.anko.toast
 import riza.com.cto.R
-import riza.com.cto.core.PolygonUtils
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.debugLog
 import riza.com.cto.support.getCompatColor

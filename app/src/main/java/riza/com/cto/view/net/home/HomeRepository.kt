@@ -1,4 +1,4 @@
-package riza.com.cto.view.home
+package riza.com.cto.view.net.home
 
 import riza.com.cto.data.api.MainAPI
 import riza.com.cto.support.base.BaseRepository

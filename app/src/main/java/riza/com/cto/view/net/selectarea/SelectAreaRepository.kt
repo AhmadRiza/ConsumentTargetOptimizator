@@ -1,4 +1,4 @@
-package riza.com.cto.view.selectarea
+package riza.com.cto.view.net.selectarea
 
 import riza.com.cto.data.api.MainAPI
 import riza.com.cto.support.base.BaseRepository

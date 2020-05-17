@@ -1,4 +1,4 @@
-package riza.com.cto.view.home
+package riza.com.cto.view.net.home
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

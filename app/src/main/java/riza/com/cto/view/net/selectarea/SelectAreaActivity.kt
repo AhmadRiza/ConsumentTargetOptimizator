@@ -1,4 +1,4 @@
-package riza.com.cto.view.selectarea
+package riza.com.cto.view.net.selectarea
 
 import android.app.Activity
 import android.content.DialogInterface
@@ -14,8 +14,8 @@ import org.jetbrains.anko.intentFor
 import riza.com.cto.R
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.Adapter2
-import riza.com.cto.view.maps.MapsActivity
-import riza.com.cto.view.testarea.AreaVH
+import riza.com.cto.view.local.maps.MapsActivity
+import riza.com.cto.view.local.testarea.AreaVH
 
 class SelectAreaActivity : AppCompatActivity() {
 

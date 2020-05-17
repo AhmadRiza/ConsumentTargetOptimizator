@@ -1,4 +1,4 @@
-package riza.com.cto.view.check
+package riza.com.cto.view.local.check
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -9,9 +9,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
-import riza.com.cto.core.Polygon
 import riza.com.cto.core.Point
 import riza.com.cto.core.PointInclusion
+import riza.com.cto.core.Polygon
 import riza.com.cto.core.PolygonUtils
 import riza.com.cto.data.db.AppDB
 import riza.com.cto.data.db.Area

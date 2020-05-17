@@ -1,16 +1,17 @@
-package riza.com.cto.view.home
+package riza.com.cto.view.net.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.activity_check.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.item_promo.*
 import kotlinx.android.synthetic.main.view_card_stats.*
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
 import riza.com.cto.R
 import riza.com.cto.model.Promo
 import riza.com.cto.support.Adapter2
+import riza.com.cto.view.local.testarea.MainActivity
 
 /**
  * Created by riza@deliv.co.id on 5/8/20.
@@ -39,15 +40,19 @@ class HomeActivity : AppCompatActivity() {
         })
 
         vm.totalArea.observe(this, Observer {
-            tv_area?.text = it.toString()
+            tv_total_area?.text = it.toString()
         })
 
         vm.totalUser.observe(this, Observer {
-            tv_n_user?.text = it.toString()
+            tv_total_user?.text = it.toString()
         })
 
         vm.totalPromo.observe(this, Observer {
             tv_total_promo?.text = it.toString()
+        })
+
+        vm.loading.observe(this, Observer {
+            swipe?.isRefreshing = it
         })
 
     }
@@ -70,6 +75,16 @@ class HomeActivity : AppCompatActivity() {
         }
 
         rv_promo?.adapter = promoAdapter
+
+        fab_test?.setOnClickListener {
+            startActivity(
+                intentFor<MainActivity>().clearTop()
+            )
+        }
+
+        swipe?.setOnRefreshListener {
+            vm.getAllPromo()
+        }
 
 
     }

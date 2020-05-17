@@ -1,4 +1,4 @@
-package riza.com.cto.view.maps
+package riza.com.cto.view.local.maps
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +10,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_maps.*
-import kotlinx.android.synthetic.main.activity_maps.btn_back
-import kotlinx.android.synthetic.main.activity_maps.btn_clear
-import kotlinx.android.synthetic.main.activity_maps.btn_save
 import org.jetbrains.anko.toast
 import riza.com.cto.R
 import riza.com.cto.support.debugLog

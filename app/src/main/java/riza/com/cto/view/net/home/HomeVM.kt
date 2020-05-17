@@ -1,4 +1,4 @@
-package riza.com.cto.view.home
+package riza.com.cto.view.net.home
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -23,6 +23,7 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
     )
 
     val promos = MutableLiveData<List<Promo>>()
+    val loading = MutableLiveData<Boolean>()
 
 
     val totalPromo = Transformations.map(promos) {
@@ -46,6 +47,8 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
 
     fun getAllPromo() = viewModelScope.launch {
 
+        loading.postValue(true)
+
         val response = repository.getAllPromo()
 
         if (response.success) {
@@ -54,6 +57,8 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
             }
 
         }
+
+        loading.postValue(false)
 
     }
 

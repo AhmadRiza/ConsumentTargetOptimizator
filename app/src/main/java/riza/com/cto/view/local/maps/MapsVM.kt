@@ -1,4 +1,4 @@
-package riza.com.cto.view.maps
+package riza.com.cto.view.local.maps
 
 import android.app.Application
 import androidx.lifecycle.*
