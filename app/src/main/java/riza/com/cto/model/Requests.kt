@@ -1,5 +1,7 @@
 package riza.com.cto.model
 
+import riza.com.cto.core.Point
+
 /**
  * Created by riza@deliv.co.id on 5/18/20.
  */
@@ -13,4 +15,9 @@ data class PromoRequest(
     var service: String = "",
     var description: String = "",
     val areaIds: ArrayList<Long> = arrayListOf()
+)
+
+data class AddAreaRequest(
+    val name: String,
+    val points: List<Point>
 )

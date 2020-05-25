@@ -1,5 +1,6 @@
 package riza.com.cto.view.local.maps
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -43,7 +44,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val name = et_name?.text.toString()
             if(name.isBlank()) toast("Type the name")
-            else vm.saveArea(name)
+            else {
+
+                vm.getArea(name).let {
+
+                    setResult(
+                        Activity.RESULT_OK,
+                        intent.apply {
+                            putExtra("data", it)
+                        }
+                    )
+
+                    finish()
+                    return@setOnClickListener
+                }
+
+            }
 
         }
     }

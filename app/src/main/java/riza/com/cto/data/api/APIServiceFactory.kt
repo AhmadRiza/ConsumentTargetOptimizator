@@ -1,6 +1,6 @@
 package riza.com.cto.data.api
 
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import id.co.deliv.kios.repository.api.InterceptorFactory
 import okhttp3.OkHttpClient
@@ -18,7 +18,7 @@ object APIServiceFactory {
     private val builder = Retrofit.Builder()
         .addConverterFactory(
             GsonConverterFactory.create(
-                GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+                Gson()
             )
         )
         .addCallAdapterFactory(CoroutineCallAdapterFactory())

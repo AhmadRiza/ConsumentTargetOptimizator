@@ -19,6 +19,9 @@ import riza.com.cto.view.local.testarea.AreaVH
 
 class SelectAreaActivity : AppCompatActivity() {
 
+    companion object {
+        const val REQ_ADD_AREA = 1
+    }
 
     private lateinit var areaAdapter: Adapter2<Area, AreaVH>
     private val vm by lazy { ViewModelProvider(this).get(SelectAreaVM::class.java) }
@@ -95,8 +98,8 @@ class SelectAreaActivity : AppCompatActivity() {
         }
 
         fab_add?.setOnClickListener {
-            startActivity(
-                intentFor<MapsActivity>()
+            startActivityForResult(
+                intentFor<MapsActivity>(), REQ_ADD_AREA
             )
         }
 
@@ -104,4 +107,29 @@ class SelectAreaActivity : AppCompatActivity() {
 
 
     }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+
+        if (resultCode != Activity.RESULT_OK) return
+
+        when (requestCode) {
+
+            REQ_ADD_AREA -> {
+
+                data?.getParcelableExtra<Area>("data")?.let {
+
+                    vm.addArea(it)
+
+                }
+
+            }
+
+        }
+
+    }
+
 }

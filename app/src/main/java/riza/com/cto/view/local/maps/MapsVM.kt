@@ -79,6 +79,12 @@ class MapsVM(application: Application) : AndroidViewModel(application) {
         polygonDbId.postValue(repository.saveArea(area))
     }
 
+    fun getArea(name: String): Area {
+        val gson = Gson()
+        val points = gson.toJson(polygonOutput.value)
+        return Area(0L, name, points)
+    }
+
 
 
 }

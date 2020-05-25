@@ -7,10 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import riza.com.cto.model.AreaPromo
-import riza.com.cto.model.Promo
-import riza.com.cto.model.PromoRequest
-import riza.com.cto.model.TestModel
+import riza.com.cto.model.*
 import riza.com.cto.support.base.BaseResponse
 
 interface MainAPI {
@@ -36,6 +33,8 @@ interface MainAPI {
     @GET("area/all")
     fun getAllAreaAsync(): Deferred<Response<BaseResponse<List<AreaPromo>>>>
 
+    @POST("area/add")
+    fun addAreaAsync(@Body body: AddAreaRequest): Deferred<Response<BaseResponse<Any>>>
 
 
 
