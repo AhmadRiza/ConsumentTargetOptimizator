@@ -1,12 +1,20 @@
 package riza.com.cto.support
 
 import android.content.Context
+import android.os.Build
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.jetbrains.anko.toast
 import riza.com.cto.BuildConfig
+import java.util.*
 
 /**
  * Created by riza@deliv.co.id on 2/28/20.
@@ -62,4 +70,46 @@ fun getTimeDif(time1: Long, time2: Long): String {
         return "$elapsedHours Jam"
     }
 
+}
+
+val month =
+    arrayOf("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des")
+
+fun printDate(calendar: Calendar): String {
+    return "${calendar.get(Calendar.DATE)} ${month[calendar.get(Calendar.MONTH)]} ${calendar.get(
+        Calendar.YEAR
+    )}"
+}
+
+fun EditText.valideteIfEmpty(fieldName: String): Boolean {
+    if (text.isNullOrBlank()) {
+        context.toast("$fieldName tidak boleh kosong")
+        showKeyboad()
+        return false
+    }
+    return true
+}
+
+
+fun EditText.showKeyboad() {
+    requestFocus()
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+
+
+fun EditText.hideKeyboard() {
+    clearFocus()
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
+}
+
+
+fun TextView.loadHTML(html: String) {
+    text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+    } else {
+        Html.fromHtml(html)
+    }
+    movementMethod = LinkMovementMethod.getInstance()
 }

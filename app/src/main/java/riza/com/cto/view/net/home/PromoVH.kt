@@ -18,7 +18,7 @@ class PromoVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
             data?.let {
                 tv_code?.text = it.code
                 tv_area?.text = "${it.areas.size}"
-                tv_until?.text = "${getTimeDif(it.endDate, Date().time)} lagi"
+                tv_until?.text = "${getTimeDif(Date().time, it.endDate)} lagi"
 
                 rootView.setOnClickListener { onClick.invoke(data) }
 

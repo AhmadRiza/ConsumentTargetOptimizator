@@ -10,6 +10,7 @@ import riza.com.cto.data.api.APIServiceFactory
 import riza.com.cto.data.api.MainAPI
 import riza.com.cto.model.AreaPromo
 import riza.com.cto.model.Promo
+import riza.com.cto.model.PromoRequest
 import riza.com.cto.model.UserIds
 
 /**
@@ -24,6 +25,7 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
 
     val promos = MutableLiveData<List<Promo>>()
     val loading = MutableLiveData<Boolean>()
+    val error = MutableLiveData<String>()
 
 
     val totalPromo = Transformations.map(promos) {
@@ -60,6 +62,14 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
 
         loading.postValue(false)
 
+    }
+
+
+    fun addPromo(addPromoRequest: PromoRequest) = viewModelScope.launch {
+        repository.addPromo(addPromoRequest).let {
+            if (it.success) getAllPromo()
+            else error.postValue(it.message.toString())
+        }
     }
 
 

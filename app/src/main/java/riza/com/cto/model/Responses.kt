@@ -27,11 +27,6 @@ data class AreaPromo(
 )
 
 data class UserIds(
-    val id: Long
+    val id: Long,
+    val name: String
 )
-
-object PromoType {
-    const val PERCENT = "PERCENT"
-    const val PRICE = "PRICE"
-}
-
