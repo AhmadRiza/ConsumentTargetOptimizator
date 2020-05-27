@@ -46,6 +46,7 @@
         </activity>
         <activity android:name="riza.com.cto.view.net.selectarea.SelectAreaActivity" />
         <activity android:name=".view.net.home.AddPromoActivity" />
+        <activity android:name=".view.net.users.PromoUsersActivity" />
     </application>
 
 </manifest>

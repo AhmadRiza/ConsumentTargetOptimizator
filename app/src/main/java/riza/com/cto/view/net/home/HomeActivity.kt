@@ -16,6 +16,7 @@ import riza.com.cto.model.Promo
 import riza.com.cto.model.PromoRequest
 import riza.com.cto.support.Adapter2
 import riza.com.cto.view.local.testarea.MainActivity
+import riza.com.cto.view.net.users.PromoUsersActivity
 
 /**
  * Created by riza@deliv.co.id on 5/8/20.
@@ -78,7 +79,13 @@ class HomeActivity : AppCompatActivity() {
         ) {
             override fun bindView(holder: PromoVH, data: Promo?, position: Int) {
                 holder.bind(data) {
-                    //onclick
+                    startActivity(
+                        PromoUsersActivity.getIntent(
+                            this@HomeActivity,
+                            it.code,
+                            it.users
+                        )
+                    )
 
                 }
             }
