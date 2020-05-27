@@ -139,6 +139,17 @@
                 app:layout_constraintTop_toTopOf="@id/btn_type"
                 android:layout_marginStart="@dimen/_12sdp" />
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_threshold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Threshold (berapa kali masuk area)"
+                android:inputType="number"
+                android:maxLength="2"
+                android:fontFamily="@font/bold"
+                app:layout_constraintTop_toBottomOf="@id/et_total"
+                android:layout_marginTop="@dimen/_12sdp" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/label1"
                 android:layout_width="wrap_content"
@@ -147,7 +158,7 @@
                 android:gravity="center"
                 android:text="Masa Promo"
                 android:textColor="@color/textGrey"
-                app:layout_constraintTop_toBottomOf="@id/btn_type"
+                app:layout_constraintTop_toBottomOf="@id/et_threshold"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginStart="@dimen/_3sdp" />
@@ -236,6 +247,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:drawableStart="@drawable/ic_add"
                 app:layout_constraintTop_toBottomOf="@id/rv_area" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

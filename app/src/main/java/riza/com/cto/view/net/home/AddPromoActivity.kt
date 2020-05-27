@@ -172,6 +172,8 @@ class AddPromoActivity : AppCompatActivity() {
         mPromo.description = et_info?.text.toString()
         if (et_total?.valideteIfEmpty("Total Promo") == false) return
         mPromo.value = et_total?.text.toString().toInt()
+        if (et_threshold?.valideteIfEmpty("Threshold") == false) return
+        mPromo.threshold = et_threshold?.text.toString().toInt()
 
         if (mPromo.service.isBlank()) {
             toast("Servis Kosong")

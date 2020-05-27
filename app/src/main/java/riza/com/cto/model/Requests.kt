@@ -18,7 +18,8 @@ data class PromoRequest(
     var value: Int = 0,
     var service: String = "",
     var description: String = "",
-    var areaIds: List<Long> = emptyList()
+    var areaIds: List<Long> = emptyList(),
+    var threshold: Int = 0
 ) : Parcelable
 
 data class AddAreaRequest(
