@@ -22,14 +22,33 @@ data class Promo(
     @Expose val users: List<UserIds>
 )
 
+@Parcelize
 data class AreaPromo(
     @Expose val id: Long,
     @Expose val name: String,
     @Expose val points: String
-)
+) : Parcelable
 
 @Parcelize
 data class UserIds(
     val id: Long,
     val name: String
 ) : Parcelable
+
+
+data class User(
+    val id: Long,
+    val name: String,
+    val fcmId: String,
+    val locations: UserLocation
+)
+
+data class UserLocation(
+    val monday: String,
+    val tuesday: String,
+    val wednesday: String,
+    val thursday: String,
+    val friday: String,
+    val saturday: String,
+    val sunday: String
+)

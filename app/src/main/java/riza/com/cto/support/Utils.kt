@@ -29,7 +29,7 @@ fun Context.getCompatColor(resource: Int) = ContextCompat.getColor(this, resourc
 
 fun <T> gsontoList(string: String): List<T> {
     val listType = object : TypeToken<List<T>>() {}.type
-    return Gson().fromJson<List<T>>(string, listType)
+    return Gson().fromJson(string, listType)
 }
 
 fun View.visible() {

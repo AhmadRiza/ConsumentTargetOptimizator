@@ -83,7 +83,8 @@ class HomeActivity : AppCompatActivity() {
                         PromoUsersActivity.getIntent(
                             this@HomeActivity,
                             it.code,
-                            it.users
+                            it.users,
+                            it.areas
                         )
                     )
 

@@ -8,8 +8,10 @@ import kotlinx.android.synthetic.main.activity_users_look.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import riza.com.cto.R
+import riza.com.cto.model.AreaPromo
 import riza.com.cto.model.UserIds
 import riza.com.cto.support.Adapter2
+import riza.com.cto.view.net.userlocation.UserLocationsActivity
 
 /**
  * Created by riza@deliv.co.id on 5/27/20.
@@ -19,11 +21,17 @@ class PromoUsersActivity : AppCompatActivity() {
 
     companion object {
 
-        fun getIntent(context: Context?, promoCode: String, users: List<UserIds>) =
+        fun getIntent(
+            context: Context?,
+            promoCode: String,
+            users: List<UserIds>,
+            areaPromo: List<AreaPromo>
+        ) =
             context?.run {
                 intentFor<PromoUsersActivity>().apply {
                     putExtra("code", promoCode)
                     putParcelableArrayListExtra("users", ArrayList(users))
+                    putParcelableArrayListExtra("areas", ArrayList(areaPromo))
                 }.clearTop()
             }
 
@@ -41,6 +49,13 @@ class PromoUsersActivity : AppCompatActivity() {
             override fun bindView(holder: UserVH, data: UserIds?, position: Int) {
                 holder.bind(data) {
 
+                    startActivity(
+                        UserLocationsActivity.getIntent(
+                            this@PromoUsersActivity,
+                            areas,
+                            it.id
+                        )
+                    )
 
                 }
             }
@@ -48,6 +63,8 @@ class PromoUsersActivity : AppCompatActivity() {
         }
 
     }
+
+    private lateinit var areas: List<AreaPromo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +83,8 @@ class PromoUsersActivity : AppCompatActivity() {
         intent.getParcelableArrayListExtra<UserIds>("users")?.let {
             userAdapter.updateList(it)
         }
+
+        areas = intent.getParcelableArrayListExtra("areas") ?: emptyList()
 
     }
 

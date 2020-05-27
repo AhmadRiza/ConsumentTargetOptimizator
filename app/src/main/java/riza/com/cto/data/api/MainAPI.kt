@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import riza.com.cto.model.*
 import riza.com.cto.support.base.BaseResponse
 
@@ -36,6 +37,7 @@ interface MainAPI {
     @POST("area/add")
     fun addAreaAsync(@Body body: AddAreaRequest): Deferred<Response<BaseResponse<Any>>>
 
-
+    @GET("user/{id}")
+    fun getUser(@Path("id") id: Long): Deferred<Response<BaseResponse<User>>>
 
 }
