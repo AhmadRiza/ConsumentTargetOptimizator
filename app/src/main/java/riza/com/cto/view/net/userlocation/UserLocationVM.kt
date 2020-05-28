@@ -1,6 +1,7 @@
 package riza.com.cto.view.net.userlocation
 
 import android.app.Application
+import android.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -31,6 +32,15 @@ class UserLocationVM(application: Application) : AndroidViewModel(application) {
     private val areaPromo = MutableLiveData<List<AreaPromo>>()
     val error = MutableLiveData<String>()
 
+    val colors = arrayOf(
+        Color.RED,
+        Color.BLUE,
+        Color.GREEN,
+        Color.YELLOW,
+        Color.MAGENTA,
+        Color.CYAN,
+        Color.LTGRAY
+    )
 
     val areas = Transformations.map(areaPromo) {
 

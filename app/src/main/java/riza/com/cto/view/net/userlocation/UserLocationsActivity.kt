@@ -43,7 +43,7 @@ class UserLocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
+        setContentView(R.layout.activity_maps_user)
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -79,12 +79,19 @@ class UserLocationsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMarkers.forEach { it.remove() }
             mLines.forEach { it.remove() }
 
-            it.forEach { locs: Pair<String, List<LatLng>> ->
+            it.forEachIndexed { index, locs: Pair<String, List<LatLng>> ->
                 locs.second.forEach { addMarkerOn(it, locs.first) }
-                createLine(locs.second)
+                createLine(index, locs.second)
             }
 
 
+        })
+
+        vm.areas.observe(this, Observer {
+            mPolygons.forEach { it.remove() }
+            it.forEach {
+                createPolygon(it)
+            }
         })
 
         vm.center.observe(this, Observer {
@@ -111,7 +118,7 @@ class UserLocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val marker = mMap.addMarker(
             MarkerOptions().position(p)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)).title(title)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.dot)).title(title)
         )
 
         mMarkers.add(marker)
@@ -129,17 +136,19 @@ class UserLocationsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .strokeWidth(1f)
                 .addAll(data)
                 .strokeJointType(JointType.BEVEL)
-
         )
 
         mPolygons.add(p)
     }
 
 
-    private fun createLine(data: List<LatLng>) {
+    private fun createLine(idx: Int, data: List<LatLng>) {
         val polyline: Polyline = mMap.addPolyline(
             PolylineOptions()
                 .clickable(true)
+                .width(1f)
+                .jointType(JointType.BEVEL)
+                .color(vm.colors[idx])
                 .addAll(
                     data
                 )
