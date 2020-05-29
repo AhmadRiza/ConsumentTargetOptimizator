@@ -32,7 +32,7 @@ data class AreaPromo(
 @Parcelize
 data class UserIds(
     val id: Long,
-    val name: String
+    var name: String
 ) : Parcelable
 
 

@@ -13,7 +13,7 @@ class UserLocationRepository(
 
 
     suspend fun getUser(id: Long) = callAPI {
-        api.getUser(id)
+        api.getUserAsync(id)
     }
 
 }

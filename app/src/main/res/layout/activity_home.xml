@@ -17,10 +17,11 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_profile"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="@dimen/_34sdp"
+                android:layout_height="@dimen/_34sdp"
                 android:layout_margin="@dimen/_16sdp"
-                android:background="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_account"
+                app:tint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

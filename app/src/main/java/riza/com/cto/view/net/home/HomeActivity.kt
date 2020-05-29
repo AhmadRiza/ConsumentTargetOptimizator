@@ -39,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
         initObserver()
 
         vm.getAllPromo()
+        vm.getAllUser()
     }
 
     private fun initObserver() {
@@ -79,11 +80,16 @@ class HomeActivity : AppCompatActivity() {
         ) {
             override fun bindView(holder: PromoVH, data: Promo?, position: Int) {
                 holder.bind(data) {
+
+                    it.users.forEach {
+                        it.name += " [targeted]"
+                    }
+
                     startActivity(
                         PromoUsersActivity.getIntent(
                             this@HomeActivity,
                             it.code,
-                            it.users,
+                            vm.getUserList(it.users),
                             it.areas
                         )
                     )

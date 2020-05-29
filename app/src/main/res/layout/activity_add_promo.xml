@@ -271,17 +271,6 @@
             android:backgroundTint="@color/colorPrimary"
             android:text="Tambah Promo" />
 
-        <ProgressBar
-            android:id="@+id/loading"
-            android:elevation="@dimen/_8sdp"
-            android:outlineProvider="none"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_gravity="center|start"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:indeterminateTint="@color/white" />
-
-
     </FrameLayout>
 
 

@@ -24,6 +24,7 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
     )
 
     val promos = MutableLiveData<List<Promo>>()
+    val users = arrayListOf<UserIds>()
     val loading = MutableLiveData<Boolean>()
     val error = MutableLiveData<String>()
 
@@ -64,12 +65,50 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
 
     }
 
+    fun getAllUser() = viewModelScope.launch {
+
+        val response = repository.getAllUsers()
+
+        if (response.success) {
+            response.data?.let {
+                users.clear()
+                users.addAll(it.map { UserIds(it.id, it.name) })
+            }
+
+        }
+
+    }
+
 
     fun addPromo(addPromoRequest: PromoRequest) = viewModelScope.launch {
         repository.addPromo(addPromoRequest).let {
             if (it.success) getAllPromo()
             else error.postValue(it.message.toString())
         }
+    }
+
+
+    fun getUserList(data: List<UserIds>): ArrayList<UserIds> {
+
+        val result = arrayListOf<UserIds>()
+
+        result.addAll(data)
+
+        users.forEach { u1: UserIds ->
+            var found = false
+            for (u2 in data) {
+                if (u2.id == u1.id) {
+                    found = true
+                    break
+                }
+            }
+
+            if (!found) result.add(u1)
+        }
+
+
+        return result
+
     }
 
 

@@ -14,6 +14,7 @@ class HomeRepository(
 
     suspend fun getAllPromo() = callAPI { api.getAllPromoAsync() }
 
+    suspend fun getAllUsers() = callAPI { api.getAllUserAsync() }
 
     suspend fun addPromo(
         promoRequest: PromoRequest
