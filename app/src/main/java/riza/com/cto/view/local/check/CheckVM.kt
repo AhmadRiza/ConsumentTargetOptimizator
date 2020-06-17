@@ -15,6 +15,7 @@ import riza.com.cto.core.Polygon
 import riza.com.cto.core.PolygonUtils
 import riza.com.cto.data.db.AppDB
 import riza.com.cto.data.db.Area
+import riza.com.cto.support.CSVWriterHelper
 import riza.com.cto.support.debugLog
 import java.lang.Math.random
 import kotlin.math.PI
@@ -27,6 +28,8 @@ import kotlin.math.sqrt
  */
 
 class CheckVM(application: Application) : AndroidViewModel(application) {
+
+    private val csvHelper = CSVWriterHelper(application)
 
     val polygonData = MutableLiveData<ArrayList<LatLng>>()
     val centroid = MutableLiveData<LatLng>()
@@ -71,6 +74,10 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
         radius.postValue(100)
         nUser.postValue(100)
+
+        mPolygon?.let {
+            csvHelper.writePoly(it)
+        }
 
     }
 
@@ -133,6 +140,8 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
         )
 
         listTest.postValue(result)
+
+        csvHelper.writeCheckResult(result, if (isUsingWN) "WN" else "CN")
 
     }
 

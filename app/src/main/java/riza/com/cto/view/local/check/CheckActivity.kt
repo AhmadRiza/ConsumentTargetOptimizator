@@ -1,9 +1,12 @@
 package riza.com.cto.view.local.check
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -59,11 +62,23 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBar
         }
 
         rg_algorithm?.setOnCheckedChangeListener { radioGroup, i ->
-            when(i){
+            when (i) {
                 R.id.rad_wn -> vm.setisUsingWN(true)
                 R.id.rad_cn -> vm.setisUsingWN(false)
             }
 
+        }
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                1
+            )
         }
 
     }

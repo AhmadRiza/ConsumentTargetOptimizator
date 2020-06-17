@@ -81,6 +81,12 @@ fun printDate(calendar: Calendar): String {
     )}"
 }
 
+fun printCurrentTime(calendar: Calendar): String {
+    return "${calendar.get(Calendar.DATE)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.HOUR)}:${calendar.get(
+        Calendar.MINUTE
+    )}"
+}
+
 fun EditText.valideteIfEmpty(fieldName: String): Boolean {
     if (text.isNullOrBlank()) {
         context.toast("$fieldName tidak boleh kosong")
