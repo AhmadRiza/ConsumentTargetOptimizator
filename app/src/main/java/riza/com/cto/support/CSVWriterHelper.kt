@@ -3,11 +3,16 @@ package riza.com.cto.support
 import android.content.Context
 import android.os.Environment
 import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import riza.com.cto.core.Point
 import riza.com.cto.core.Polygon
+import riza.com.cto.model.AreaPromo
 import riza.com.cto.model.UserIds
 import java.io.File
 import java.io.FileWriter
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by riza@deliv.co.id on 6/17/20.
@@ -18,6 +23,8 @@ class CSVWriterHelper(context: Context) {
 
     private val filePath by lazy { context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) }
     private val time by lazy { printCurrentTime(Calendar.getInstance()) }
+    private val gson by lazy { Gson() }
+
 
     fun writePoly(poly: Polygon) {
 
@@ -149,5 +156,16 @@ class CSVWriterHelper(context: Context) {
 
     }
 
+
+    fun writeArea(areas: List<AreaPromo>) {
+        areas.map { Polygon(it.name, ArrayList(extractPoint(it.points))) }.forEach {
+            writePoly(it)
+        }
+    }
+
+    private fun extractPoint(data: String): List<Point> {
+        val listType = object : TypeToken<List<Point>>() {}.type
+        return gson.fromJson(data, listType)
+    }
 
 }

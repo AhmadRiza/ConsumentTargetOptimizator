@@ -110,6 +110,8 @@ class PromoUsersActivity : AppCompatActivity() {
 
             val csvHelper = CSVWriterHelper(this@PromoUsersActivity)
 
+            csvHelper.writeArea(areas)
+
             csvHelper.writeUserResult(userAdapter.mData ?: emptyList())
 
             runOnUiThread {
