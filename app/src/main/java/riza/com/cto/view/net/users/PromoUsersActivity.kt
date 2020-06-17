@@ -5,12 +5,16 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_users_look.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.toast
 import riza.com.cto.R
 import riza.com.cto.model.AreaPromo
 import riza.com.cto.model.UserIds
 import riza.com.cto.support.Adapter2
+import riza.com.cto.support.CSVWriterHelper
 import riza.com.cto.view.net.userlocation.UserLocationsActivity
 
 /**
@@ -94,7 +98,27 @@ class PromoUsersActivity : AppCompatActivity() {
 
         rv_user?.adapter = userAdapter
 
+        btn_save?.setOnClickListener {
+            saveResult()
+        }
+
     }
 
+    private fun saveResult() {
+
+        GlobalScope.launch {
+
+            val csvHelper = CSVWriterHelper(this@PromoUsersActivity)
+
+            csvHelper.writeUserResult(userAdapter.mData ?: emptyList())
+
+            runOnUiThread {
+                toast("Data disimpan")
+            }
+
+        }
+
+
+    }
 
 }

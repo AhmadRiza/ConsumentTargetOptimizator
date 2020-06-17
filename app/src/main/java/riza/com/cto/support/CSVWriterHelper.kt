@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Environment
 import com.google.android.gms.maps.model.LatLng
 import riza.com.cto.core.Polygon
+import riza.com.cto.model.UserIds
 import java.io.File
 import java.io.FileWriter
 import java.util.*
@@ -90,6 +91,49 @@ class CSVWriterHelper(context: Context) {
                 fw.append(",")
 
                 fw.append("${it.second}")
+                fw.append(",")
+
+                fw.append("\n")
+
+            }
+
+            fw.flush()
+
+        } catch (e: Exception) {
+            e.printDebugLog()
+        }
+
+
+    }
+
+    fun writeUserResult(data: List<UserIds>) {
+
+        try {
+
+            val targetFile = File(filePath, "${time}-users.csv")
+            val fw = FileWriter(targetFile)
+
+            fw.append("No")
+            fw.append(",")
+
+            fw.append("Name")
+            fw.append(",")
+
+            fw.append("Targetted")
+            fw.append(",")
+
+
+            fw.append("\n")
+
+            data.forEachIndexed { index, it ->
+
+                fw.append("${index + 1}")
+                fw.append(",")
+
+                fw.append("${it.name.replace(" [targeted]", "")}")
+                fw.append(",")
+
+                fw.append("${it.name.contains(" [targeted]")}")
                 fw.append(",")
 
                 fw.append("\n")
