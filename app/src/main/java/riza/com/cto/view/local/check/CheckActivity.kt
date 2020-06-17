@@ -54,11 +54,15 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBar
         seek_user?.setOnSeekBarChangeListener(this)
 
         btn_single?.setOnClickListener {
-            if(vm.nUser.value?:0>0 && vm.radius.value?:0>0){
+            if (vm.nUser.value ?: 0 > 0 && vm.radius.value ?: 0 > 0) {
                 vm.singleTest()
-            }else{
+            } else {
                 toast("Radius & User couldn't be 0")
             }
+        }
+
+        btn_save?.setOnClickListener {
+            vm.saveToCSV()
         }
 
         rg_algorithm?.setOnCheckedChangeListener { radioGroup, i ->
@@ -127,6 +131,10 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBar
             tv_milis?.visible()
             tv_milis?.text = "$it ms"
 
+        })
+
+        vm.message.observe(this, Observer {
+            toast(it)
         })
 
     }

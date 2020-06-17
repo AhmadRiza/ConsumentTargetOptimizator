@@ -99,7 +99,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btn_automated"
+                android:id="@+id/btn_save"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:minWidth="@dimen/_80sdp"
@@ -113,7 +113,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/bold"
                     android:textColor="@color/white"
-                    android:text="Automated"
+                    android:text="Save as CSV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

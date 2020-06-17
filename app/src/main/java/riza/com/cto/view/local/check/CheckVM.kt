@@ -1,10 +1,7 @@
 package riza.com.cto.view.local.check
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -37,6 +34,9 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
     val radius = MutableLiveData<Int>()
     val milis = MutableLiveData<Long>()
     val listTest = MutableLiveData<ArrayList<Pair<LatLng, Boolean>>>()
+
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
 
 
     private var mPolygon: Polygon? = null
@@ -74,10 +74,6 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
         radius.postValue(100)
         nUser.postValue(100)
-
-        mPolygon?.let {
-            csvHelper.writePoly(it)
-        }
 
     }
 
@@ -141,9 +137,22 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
         listTest.postValue(result)
 
-        csvHelper.writeCheckResult(result, if (isUsingWN) "WN" else "CN")
 
     }
 
+
+    fun saveToCSV() = viewModelScope.launch {
+
+        mPolygon?.let {
+            csvHelper.writePoly(it)
+        }
+
+        listTest.value?.let {
+            csvHelper.writeCheckResult(it, if (isUsingWN) "WN" else "CN")
+        }
+
+        _message.postValue("Saved as CSV")
+
+    }
 
 }
