@@ -28,12 +28,26 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
     private val csvHelper = CSVWriterHelper(application)
 
-    val polygonData = MutableLiveData<ArrayList<LatLng>>()
-    val centroid = MutableLiveData<LatLng>()
-    val nUser = MutableLiveData<Int>()
-    val radius = MutableLiveData<Int>()
-    val milis = MutableLiveData<Long>()
-    val listTest = MutableLiveData<ArrayList<Pair<LatLng, Boolean>>>()
+    private val _polygonData = MutableLiveData<ArrayList<LatLng>>()
+    val polygonData: LiveData<ArrayList<LatLng>> = _polygonData
+
+
+    private val _centroid = MutableLiveData<LatLng>()
+    val centroid: LiveData<LatLng> = _centroid
+
+    private val _nUser = MutableLiveData<Int>()
+    val nUser: LiveData<Int> = _nUser
+
+    private val _radius = MutableLiveData<Int>()
+    val radius: LiveData<Int> = _radius
+
+    private val _milis = MutableLiveData<Long>()
+    val milis: LiveData<Long> = _milis
+
+    private val _listTest = MutableLiveData<ArrayList<Pair<LatLng, Boolean>>>()
+    val listTest: LiveData<ArrayList<Pair<LatLng, Boolean>>> = _listTest
+
+    private val targetTest = arrayListOf<Point>()
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
@@ -67,26 +81,27 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
         }
 
-        polygonData.postValue(data)
+        _polygonData.postValue(data)
 
         val center = PolygonUtils.calculateCentroid(points)
-        centroid.postValue(LatLng(center.y, center.x))
+        _centroid.postValue(LatLng(center.y, center.x))
 
-        radius.postValue(100)
-        nUser.postValue(100)
+        _radius.postValue(100)
+        _nUser.postValue(100)
 
     }
 
     fun setNUser(n: Int) {
-        nUser.value = n
+        _nUser.value = n * 10
     }
 
     fun setRadius(r: Int) {
-        radius.value = r
+        _radius.value = r * 10
     }
 
-    fun setisUsingWN(isUsingWN: Boolean) {
-        this.isUsingWN = isUsingWN
+    fun setisUsingWN(isWN: Boolean) = viewModelScope.launch {
+        isUsingWN = isWN
+        checkWith(isWN)
     }
 
     val displayRadius = Transformations.map(radius) {
@@ -95,7 +110,7 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
     fun singleTest() = viewModelScope.launch {
 
-        val it = centroid.value!!
+        val it = _centroid.value!!
 
         val result = arrayListOf<Pair<LatLng, Boolean>>()
         val radius = PolygonUtils.getOuterRadius((radius.value ?: 0).toDouble(), mPolygon!!)
@@ -131,12 +146,71 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
         debugLog("time = $time")
 
-        milis.postValue(
+        _milis.postValue(
             time
         )
 
-        listTest.postValue(result)
+        _listTest.postValue(result)
 
+
+    }
+
+    fun generateSingleTest() = viewModelScope.launch {
+
+        val it = _centroid.value!!
+
+        targetTest.clear()
+
+        val radius = PolygonUtils.getOuterRadius((radius.value ?: 0).toDouble(), mPolygon!!)
+
+
+        for (i in 0..(nUser.value ?: 0)) {
+
+            //random point in circle
+
+            val a = random() * 2 * PI
+            val r = radius * sqrt(random())
+
+            val x = r * cos(a)
+            val y = r * sin(a)
+
+            targetTest.add(Point(it.longitude + x, it.latitude + y))
+
+        }
+
+        checkWith(isUsingWN)
+
+    }
+
+    private fun checkWith(isWN: Boolean) {
+
+        val result = arrayListOf<Pair<LatLng, Boolean>>()
+
+        if (targetTest.isEmpty()) return
+
+        var time = 0L
+
+        val now = System.currentTimeMillis()
+
+        targetTest.forEach {
+            val isInside = if (isUsingWN) {
+                geofencing.analyzePointByWN(mPolygon!!, it)
+            } else {
+                geofencing.analyzePointByCN(mPolygon!!, it)
+            }
+            result.add(
+                Pair(LatLng(it.y, it.x), isInside)
+            )
+        }
+
+        val end = System.currentTimeMillis()
+        time = end - now
+
+        _milis.postValue(
+            time
+        )
+
+        _listTest.postValue(result)
 
     }
 
@@ -147,7 +221,7 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
             csvHelper.writePoly(it)
         }
 
-        listTest.value?.let {
+        _listTest.value?.let {
             csvHelper.writeCheckResult(it, if (isUsingWN) "WN" else "CN")
         }
 

@@ -77,6 +77,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         vm.polygonDbId.observe(this, Observer {
             toast("Area disimpan")
             onBackPressed()
+
         })
     }
 

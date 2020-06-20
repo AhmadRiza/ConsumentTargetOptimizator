@@ -55,7 +55,7 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBar
 
         btn_single?.setOnClickListener {
             if (vm.nUser.value ?: 0 > 0 && vm.radius.value ?: 0 > 0) {
-                vm.singleTest()
+                vm.generateSingleTest()
             } else {
                 toast("Radius & User couldn't be 0")
             }
@@ -117,12 +117,12 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBar
         })
 
         vm.radius.observe(this, Observer {
-            seek_radius?.progress = it
+//            seek_radius?.progress = it
             tv_radius?.text = "$it Meters"
         })
 
         vm.nUser.observe(this, Observer {
-            seek_user?.progress = it
+//            seek_user?.progress = it
             tv_n_user?.text = "$it Users"
         })
 
