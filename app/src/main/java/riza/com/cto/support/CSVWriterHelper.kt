@@ -49,10 +49,10 @@ class CSVWriterHelper(context: Context) {
                 fw.append("${index + 1}")
                 fw.append(",")
 
-                fw.append(it.y.toFloat().toString())
+                fw.append(it.y.toString())
                 fw.append(",")
 
-                fw.append(it.x.toFloat().toString())
+                fw.append(it.x.toString())
                 fw.append(",")
 
                 fw.append("\n")
@@ -91,10 +91,10 @@ class CSVWriterHelper(context: Context) {
                 fw.append("${index + 1}")
                 fw.append(",")
 
-                fw.append("${it.first.latitude.toFloat()}")
+                fw.append("${it.first.latitude}")
                 fw.append(",")
 
-                fw.append("${it.first.longitude.toFloat()}")
+                fw.append("${it.first.longitude}")
                 fw.append(",")
 
                 fw.append("${it.second}")

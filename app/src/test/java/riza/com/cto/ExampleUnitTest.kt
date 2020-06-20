@@ -1,8 +1,7 @@
 package riza.com.cto
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +11,12 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+
+        val doubleCoordinate: Double = 112.61391687420308
+
+        val floatCoordinate: Float = doubleCoordinate.toFloat()
+
+        assertEquals(doubleCoordinate, floatCoordinate)
+
     }
 }
