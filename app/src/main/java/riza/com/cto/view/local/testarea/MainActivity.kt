@@ -1,6 +1,8 @@
 package riza.com.cto.view.local.testarea
 
+import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -17,6 +19,9 @@ import riza.com.cto.view.local.maps.MapsActivity
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private const val REQ_AREA = 1
+    }
 
     private lateinit var areaAdapter: Adapter2<Area, AreaVH>
     private val vm by lazy { ViewModelProvider(this).get(MainVM::class.java) }
@@ -88,11 +93,34 @@ class MainActivity : AppCompatActivity() {
         }
 
         fab_add?.setOnClickListener {
-            startActivity(
-                intentFor<MapsActivity>()
+            startActivityForResult(
+                intentFor<MapsActivity>(), REQ_AREA
             )
         }
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+
+        if (resultCode != Activity.RESULT_OK) return
+
+        when (requestCode) {
+
+            REQ_AREA -> {
+
+                data?.getParcelableExtra<Area>("data")?.let {
+
+                    vm.addArea(it)
+
+                }
+
+            }
+
+        }
 
     }
 }

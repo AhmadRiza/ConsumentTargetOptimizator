@@ -24,5 +24,8 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         repository.delete(area)
     }
 
+    fun addArea(area: Area) = viewModelScope.launch {
+        repository.addArea(area)
+    }
 
 }

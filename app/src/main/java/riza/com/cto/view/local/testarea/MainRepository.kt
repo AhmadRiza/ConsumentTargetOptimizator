@@ -12,4 +12,7 @@ class MainRepository(val db: MainDao) {
     val areas = db.loadAllArea()
     suspend fun delete(area: Area) = db.delete(area)
 
+    suspend fun addArea(area: Area) = db.insertArea(area)
+
+
 }
