@@ -117,7 +117,7 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
         var time = 0L
 
-        for (i in 0..(nUser.value ?: 0)) {
+        for (i in 0 until (nUser.value ?: 0)) {
 
             //random point in circle
 
@@ -164,7 +164,7 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
         val radius = PolygonUtils.getOuterRadius((radius.value ?: 0).toDouble(), mPolygon!!)
 
 
-        for (i in 0..(nUser.value ?: 0)) {
+        for (i in 0 until (nUser.value ?: 0)) {
 
             //random point in circle
 

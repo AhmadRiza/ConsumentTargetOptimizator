@@ -35,4 +35,15 @@ class ExampleUnitTest {
 
     }
 
+    @Test
+    fun printDouble() {
+
+        val d = 1.12345678912345
+
+        println("$d")
+        println(d.toString())
+
+
+    }
+
 }
