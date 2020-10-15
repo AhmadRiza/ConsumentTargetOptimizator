@@ -32,7 +32,7 @@ class PointInclusion {
 
         if (boundingBox.isInside(p)) {
             val cn = countCN(poly, p)
-            println("cn is $cn")
+//            println("cn is $cn")
             return (cn % 2 != 0)
         } else {
             return false
@@ -93,7 +93,7 @@ class PointInclusion {
 
         if (boundingBox.isInside(p)) {
             val wn = countWN(poly, p)
-            println("wn is $wn")
+//            println("wn is $wn")
             return (wn != 0)
         } else {
             return false
