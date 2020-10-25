@@ -13,6 +13,7 @@ object APIServiceFactory {
     private val okHttp = OkHttpClient
         .Builder()
         .addInterceptor(InterceptorFactory.loggingInterceptor())
+        .build()
 
 
     private val builder = Retrofit.Builder()
@@ -25,23 +26,15 @@ object APIServiceFactory {
 
 
     private fun <S> createService(
-        serviceClass: Class<S>, authToken: String?
+        serviceClass: Class<S>
     ): S {
-
-        if (!authToken.isNullOrBlank()) {
-            val interceptor = InterceptorFactory.authInterceptor(authToken)
-            if (!okHttp.interceptors().contains(interceptor)) {
-                okHttp.addInterceptor(interceptor)
-            }
-        }
-
-        builder.client(okHttp.build())
+        builder.client(okHttp)
         return builder.build().create(serviceClass)
     }
 
     fun <S> createMain(serviceClass: Class<S>): S {
         builder.baseUrl(getBaseURL())
-        return createService(serviceClass, null)
+        return createService(serviceClass)
     }
 
     private fun getBaseURL() = "http://localhost:8080/"

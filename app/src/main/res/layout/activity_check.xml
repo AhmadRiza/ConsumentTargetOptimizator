@@ -99,6 +99,9 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/btn_save"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -118,7 +121,11 @@
                     android:layout_height="wrap_content"/>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/btn_single"
                 android:layout_width="0dp"
                 android:layout_weight="1"
