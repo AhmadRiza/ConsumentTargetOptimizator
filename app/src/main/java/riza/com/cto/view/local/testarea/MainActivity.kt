@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         initView()
         initObserver()
+        vm.initMalang()
     }
 
     private fun initObserver() {

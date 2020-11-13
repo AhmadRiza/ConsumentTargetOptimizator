@@ -1,10 +1,9 @@
 package riza.com.cto.data.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import com.google.gson.Gson
+import riza.com.cto.core.AreaData
 
 /**
  * Created by riza@deliv.co.id on 2/29/20.
@@ -21,5 +20,22 @@ abstract class MainDao {
 
     @Query("SELECT * FROM area")
     abstract fun loadAllArea(): LiveData<List<Area>>
+
+    @Query("SELECT * FROM area WHERE name = :areaName")
+    abstract fun searchArea(areaName: String): Area?
+
+
+    @Transaction
+    open suspend fun initMalangArea() {
+
+        val gson = Gson()
+
+        AreaData.areaMalang.forEach {
+            if (searchArea(it.name) == null) insertArea(Area(0, it.name, gson.toJson(it.points)))
+        }
+
+
+    }
+
 
 }

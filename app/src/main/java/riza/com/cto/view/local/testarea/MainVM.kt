@@ -28,4 +28,9 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         repository.addArea(area)
     }
 
+
+    fun initMalang() = viewModelScope.launch {
+        repository.initMalangData()
+    }
+
 }

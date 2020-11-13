@@ -66,6 +66,8 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
     fun setPolygonData(area: Area) = viewModelScope.launch {
 
+        debugLog(area.toString())
+
         val listType = object : TypeToken<List<Point>>() {}.type
         val points = Gson().fromJson<List<Point>>(area.points, listType)
 

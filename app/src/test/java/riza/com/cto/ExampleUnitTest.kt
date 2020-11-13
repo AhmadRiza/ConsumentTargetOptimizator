@@ -2,6 +2,7 @@ package riza.com.cto
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import riza.com.cto.core.AreaData
 import riza.com.cto.core.PolygonUtils
 
 /**
@@ -42,6 +43,25 @@ class ExampleUnitTest {
 
         println("$d")
         println(d.toString())
+
+
+    }
+
+
+    @Test
+    fun extractArea() {
+
+
+        AreaData.areaMalang.forEach {
+
+            println("##${it.name}##")
+
+            it.points.forEach {
+                println("Point(${it.y}, ${it.x}),")
+            }
+
+
+        }
 
 
     }
