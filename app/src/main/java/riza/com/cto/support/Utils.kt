@@ -1,6 +1,9 @@
 package riza.com.cto.support
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -15,6 +18,7 @@ import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.toast
 import riza.com.cto.BuildConfig
 import java.util.*
+
 
 /**
  * Created by riza@deliv.co.id on 2/28/20.
@@ -76,15 +80,19 @@ val month =
     arrayOf("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des")
 
 fun printDate(calendar: Calendar): String {
-    return "${calendar.get(Calendar.DATE)} ${month[calendar.get(Calendar.MONTH)]} ${calendar.get(
-        Calendar.YEAR
-    )}"
+    return "${calendar.get(Calendar.DATE)} ${month[calendar.get(Calendar.MONTH)]} ${
+        calendar.get(
+            Calendar.YEAR
+        )
+    }"
 }
 
 fun printCurrentTime(calendar: Calendar): String {
-    return "${calendar.get(Calendar.DATE)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.HOUR)}:${calendar.get(
-        Calendar.MINUTE
-    )}"
+    return "${calendar.get(Calendar.DATE)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.HOUR)}:${
+        calendar.get(
+            Calendar.MINUTE
+        )
+    }"
 }
 
 fun EditText.valideteIfEmpty(fieldName: String): Boolean {
@@ -118,4 +126,15 @@ fun TextView.loadHTML(html: String) {
         Html.fromHtml(html)
     }
     movementMethod = LinkMovementMethod.getInstance()
+}
+
+fun Activity.openFolder(uri: Uri) {
+    try {
+        val intent = Intent(Intent.ACTION_VIEW)
+//        val mydir = Uri.parse("file://$location")
+        intent.setDataAndType(uri, "application/*") // or use */*
+        startActivity(intent)
+    } catch (e: Exception) {
+        toast(e.message.toString())
+    }
 }

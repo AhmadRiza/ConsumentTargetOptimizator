@@ -14,6 +14,7 @@ import riza.com.cto.data.db.AppDB
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.CSVWriterHelper
 import riza.com.cto.support.debugLog
+import java.io.File
 import java.lang.Math.random
 import kotlin.math.PI
 import kotlin.math.cos
@@ -51,6 +52,9 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
+
+    private val _outputFolder = MutableLiveData<File>()
+    val outputFolder: LiveData<File> = _outputFolder
 
 
     private var mPolygon: Polygon? = null
@@ -228,6 +232,8 @@ class CheckVM(application: Application) : AndroidViewModel(application) {
         }
 
         _message.postValue("Saved as CSV")
+
+        _outputFolder.postValue(csvHelper.filePath)
 
     }
 

@@ -35,15 +35,15 @@
 
         </activity>
         <activity android:name="riza.com.cto.view.local.testarea.MainActivity">
-
-        </activity>
-        <activity android:name="riza.com.cto.view.local.check.CheckActivity" />
-        <activity android:name="riza.com.cto.view.net.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="riza.com.cto.view.local.check.CheckActivity" />
+        <activity android:name="riza.com.cto.view.net.home.HomeActivity">
+
         </activity>
         <activity android:name="riza.com.cto.view.net.selectarea.SelectAreaActivity" />
         <activity android:name=".view.net.home.AddPromoActivity" />

@@ -21,7 +21,7 @@ import kotlin.collections.ArrayList
 class CSVWriterHelper(context: Context) {
 
 
-    private val filePath by lazy { context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) }
+    val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
     private val time by lazy { printCurrentTime(Calendar.getInstance()) }
     private val gson by lazy { Gson() }
 
@@ -30,7 +30,7 @@ class CSVWriterHelper(context: Context) {
 
         try {
 
-            val targetFilePoly = File(filePath, "${time}-${poly.name}.csv")
+            val targetFilePoly = File(filePath, "polygon-${poly.name}.csv")
             val fw = FileWriter(targetFilePoly)
 
             fw.append("No")
@@ -69,7 +69,7 @@ class CSVWriterHelper(context: Context) {
 
         try {
 
-            val targetFile = File(filePath, "${time}-test-$algorithm.csv")
+            val targetFile = File(filePath, "result-$algorithm.csv")
             val fw = FileWriter(targetFile)
 
             fw.append("No")

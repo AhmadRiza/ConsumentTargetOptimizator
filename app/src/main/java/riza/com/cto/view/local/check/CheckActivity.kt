@@ -3,6 +3,7 @@ package riza.com.cto.view.local.check
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import riza.com.cto.R
 import riza.com.cto.data.db.Area
 import riza.com.cto.support.debugLog
 import riza.com.cto.support.getCompatColor
+import riza.com.cto.support.openFolder
 import riza.com.cto.support.visible
 
 class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBarChangeListener {
@@ -135,6 +137,12 @@ class CheckActivity : AppCompatActivity(), OnMapReadyCallback, SeekBar.OnSeekBar
 
         vm.message.observe(this, Observer {
             toast(it)
+        })
+
+        vm.outputFolder.observe(this, Observer {
+            openFolder(
+                Uri.parse(it.toString())
+            )
         })
 
     }
